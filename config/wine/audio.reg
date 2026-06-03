@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Wine\Alsa Driver]
+"AutoScanCards"="Y"
+"ForceMixing"="Y"
+
+[HKEY_CURRENT_USER\Software\Wine\Pulse]
+"AutoSpawn"="Y"
+
+[HKEY_CURRENT_USER\Software\Wine\DirectSound]
+"Hardware Acceleration"="Full"

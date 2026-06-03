@@ -1,0 +1,71 @@
+#!/bin/bash
+# Multi-OS Linux - 内核配置工具
+# 为 Multi-OS 系统生成优化的内核配置
+
+set -e
+
+readonly CONFIG_FILE="config-multi-os"
+
+cat > "$CONFIG_FILE" << 'EOF'
+# Multi-OS Linux Kernel Configuration (优化版)
+CONFIG_LOCALVERSION="-multi-os"
+CONFIG_DEFAULT_HOSTNAME="multi-os"
+
+# Multi-Platform Support
+CONFIG_BINFMT_MISC=y
+CONFIG_BINFMT_ELF=y
+
+# File Systems
+CONFIG_EXT4_FS=y
+CONFIG_FUSE_FS=y
+CONFIG_ISO9660_FS=y
+CONFIG_VFAT_FS=y
+CONFIG_NTFS_FS=y
+CONFIG_NTFS_RW=y
+
+# Network
+CONFIG_NET=y
+CONFIG_INET=y
+CONFIG_IPV6=y
+CONFIG_CIFS=y
+CONFIG_NFS_FS=y
+
+# Hardware
+CONFIG_DEVTMPFS=y
+CONFIG_SOUND=y
+CONFIG_USB=y
+CONFIG_INPUT=y
+CONFIG_DRM=y
+CONFIG_FB=y
+
+# Performance
+CONFIG_HZ_1000=y
+CONFIG_PREEMPT=y
+CONFIG_CGROUP=y
+
+# Container Support  
+CONFIG_NAMESPACES=y
+CONFIG_OVERLAY_FS=y
+
+# Compression
+CONFIG_SQUASHFS=y
+CONFIG_SQUASHFS_ZLIB=y
+CONFIG_SQUASHFS_LZ4=y
+
+# Modules
+CONFIG_MODULES=y
+CONFIG_MODULE_UNLOAD=y
+
+# 64-bit
+CONFIG_64BIT=y
+CONFIG_X86_64=y
+CONFIG_SMP=y
+
+# Power Management
+CONFIG_PM=y
+CONFIG_SUSPEND=y
+CONFIG_HIBERNATION=y
+CONFIG_ACPI=y
+EOF
+
+echo "已生成优化内核配置: $CONFIG_FILE"

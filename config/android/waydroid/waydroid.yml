@@ -1,0 +1,52 @@
+# Multi-OS Linux Waydroid Configuration
+# Android 兼容性层配置
+
+# 通用配置
+arch: x86_64
+session-path: /run/waydroid
+mount-overlays: /wayland/waydroid-overlay
+
+# 分辨率配置 (可自定义)
+width: 1080
+height: 1920
+dpi: 420
+
+# 网络配置
+network:
+  ipv4: 10.15.19.0/24
+  dns: 8.8.8.8,8.8.4.4
+
+# 系统配置
+system:
+  android_id: 0000000000000000
+  kernel: /usr/bin/kernel-selector
+  silent: true
+
+# 分享配置
+分享: true
+分享路径: /home/$USER/android-shared
+
+# GPU 配置
+gpu:
+  mode: auto  # auto, host, off, swiftshader, virtio
+  driver: auto
+
+# 音频配置
+audio:
+  mode: alsa  # alsa, pulse, off
+
+# 系统服务
+services:
+  - waydroid-container-manager
+  - waydroid-session
+
+# 多平台兼容性
+compatibility:
+  # Wine 共存支持
+  wine-shared-network: true
+  
+  # 与 Darling 共享资源
+  darling-shared-resources: false
+  
+  # GPU 资源共享
+  gpu-share-with-wine: true

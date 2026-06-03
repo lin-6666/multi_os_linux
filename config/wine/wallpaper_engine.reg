@@ -1,0 +1,35 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Wine\Drivers]
+"Audio"="pulse"
+
+[HKEY_CURRENT_USER\Software\Wine\Direct3D]
+"DirectDrawRenderer"="opengl"
+"UseGLSL"="enabled"
+"MaxVersionGL"="46000"
+"VideoMemorySize"="4096"
+"csmt"="enabled"
+
+[HKEY_CURRENT_USER\Software\Wine\X11 Driver]
+"UseXVidMode"="N"
+"UseXRandR"="Y"
+"Desktop"="Default"
+
+[HKEY_CURRENT_USER\Software\Wine\Explorer\Desktops]
+"Default"="1920x1080"
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"Wallpaper"="C:\\wallpapers\\default.jpg"
+"WallpaperStyle"="2"
+"TileWallpaper"="0"
+
+[HKEY_CURRENT_USER\Software\Valve\Steam]
+"Language"="schinese"
+
+[HKEY_CURRENT_USER\Software\Wine\AppDefaults\steam.exe]
+
+[HKEY_CURRENT_USER\Software\Wine\AppDefaults\steam.exe\DllOverrides]
+"*steam_api"="native,builtin"
+"*steamclient"="native,builtin"
+"d3d11"="builtin"
+"dxgi"="builtin"

@@ -1,0 +1,12 @@
+# ALSA 配置建议
+# /etc/asound.conf 或 ~/.asoundrc
+
+# 默认设备配置
+defaults.pcm.card 0
+defaults.ctl.card 0
+
+# Wine兼容性配置
+pcm.wine {
+    type plug
+    slave.pcm "default"
+}

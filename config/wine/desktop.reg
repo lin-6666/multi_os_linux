@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"Wallpaper"="C:\\wallpapers\\default.jpg"
+"WallpaperStyle"="0"
+"TileWallpaper"="0"

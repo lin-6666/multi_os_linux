@@ -1,0 +1,15 @@
+# PulseAudio 配置建议
+# /etc/pulse/daemon.conf
+
+# 低延迟优化
+high-priority = yes
+nice-level = -11
+realtime-scheduling = yes
+realtime-priority = 5
+
+# 采样率
+default-sample-rate = 48000
+alternate-sample-rate = 44100
+
+# 延迟设置
+default-fragment-size-msec = 5

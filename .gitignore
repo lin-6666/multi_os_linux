@@ -1,0 +1,89 @@
+# Multi-OS Linux .gitignore
+#
+# 文件和目录会被 Git 忽略
+# ========================================
+
+# 构建产物
+build/
+dist/
+*.o
+*.so
+*.a
+*.iso
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.zip
+*.7z
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# Wine 配置
+~/.wine*
+.wine*/
+wineprefix/
+
+# Android/Waydroid
+.waydroid/
+waydroid-images/
+
+# 编辑器
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+.venv/
+venv/
+env/
+ENV/
+
+# 大文件
+*.bin
+*.img
+*.qcow2
+*.vdi
+*.vmdk
+*.ova
+
+# 敏感数据
+*.key
+*.pem
+*.crt
+*.p12
+*.p7b
+*.env
+*.env.local
+secrets/
+
+# 系统特定
+*.pid
+*.socket
+*.pidfile
+
+# 构建缓存
+.cache/
+*.cache
+
+# 文档生成
+_site/

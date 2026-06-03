@@ -1,0 +1,2 @@
+# Multi-OS Compatibility System - Python Dependencies
+PyYAML>=6.0
