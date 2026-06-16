@@ -1,0 +1,35 @@
+version: 2
+
+updates:
+  # GitHub Actions 依赖更新
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+      - "ci/cd"
+
+  # Python 依赖更新
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "py"
+    labels:
+      - "dependencies"
+      - "python"
+
+  # GitHub 安全更新
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "security"
+    labels:
+      - "dependencies"
+      - "security"

@@ -1,0 +1,69 @@
+name: AI Issue Assistant
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  ai-response:
+    name: AI Issue Response
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    
+    steps:
+      - name: Greet new issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueAuthor = context.payload.issue.user.login;
+            const issueBody = context.payload.issue.body;
+            
+            // Welcome message
+            const welcomeMessage = `
+## 👋 欢迎 @${issueAuthor}！
+
+感谢您为 Multi-OS Linux 项目提交 Issue！
+
+**请确保您已：**
+- ✅ 检查了 [文档](https://github.com/${context.repo.owner}/${context.repo.repo}/tree/main/docs) 中是否已有相关信息
+- ✅ 搜索了现有的 [Issues](https://github.com/${context.repo.owner}/${context.repo.repo}/issues) 看是否已有类似问题
+- ✅ 提供了足够的复现信息（如果是 bug）
+
+我们会尽快回复您！同时，您也可以：
+- 📚 查看 [Quick Start Guide](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/docs/QUICK_START.md)
+- 🎯 查看 [Project Roadmap](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/kernel-dev/KERNEL_MODIFICATION_PLAN.md)
+
+---
+*此回复由 GitHub Actions 自动生成*
+            `;
+            
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: welcomeMessage
+            });
+            
+            // Add labels based on issue content
+            const labels = [];
+            if (issueBody && issueBody.toLowerCase().includes('bug')) {
+              labels.push('bug');
+            }
+            if (issueBody && issueBody.toLowerCase().includes('feature')) {
+              labels.push('enhancement');
+            }
+            if (issueBody && issueBody.toLowerCase().includes('kernel')) {
+              labels.push('kernel');
+            }
+            if (issueBody && issueBody.toLowerCase().includes('wine')) {
+              labels.push('wine-compat');
+            }
+            
+            if (labels.length > 0) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                labels: labels
+              });
+            }

@@ -1,0 +1,122 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Multi-OS Linux Team <team@multi-os.org>
+Date: Wed, 4 Jun 2026 00:00:00 +0000
+Subject: [PATCH 3/8] Add Multi-OS system calls
+
+Add custom system calls for Multi-OS Linux features.
+---
+ arch/x86/entry/syscalls/syscall_64.tbl |  6 ++++++
+ include/linux/syscalls.h              |  8 ++++++++
+ kernel/Makefile                       |  1 +
+ kernel/multi_os.c                     | 51 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 66 insertions(+)
+ create mode 100644 kernel/multi_os.c
+
+diff --git a/arch/x86/entry/syscalls/syscall_64.tbl b/arch/x86/entry/syscalls/syscall_64.tbl
+index 000000000000..000000000000 100644
+--- a/arch/x86/entry/syscalls/syscall_64.tbl
++++ b/arch/x86/entry/syscalls/syscall_64.tbl
+@@ -449,3 +449,9 @@
+ 448	common	fspick			sys_fspick
+ 449	common	pidfd_getfd		sys_pidfd_getfd
+ 450	common	faccessat2		sys_faccessat2
++
++# Multi-OS Linux system calls
++548	common	multi_os_wine_syscall		sys_multi_os_wine_syscall
++549	common	multi_os_darling_syscall	sys_multi_os_darling_syscall
++550	common	multi_os_android_syscall	sys_multi_os_android_syscall
++551	common	multi_os_get_info		sys_multi_os_get_info
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index 000000000000..000000000000 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -1440,4 +1440,12 @@ asmlinkage long sys_faccessat2(int dfd, const char __user *filename,
+ 			       int mode, int flags);
+ #endif
+ 
++/* Multi-OS Linux system calls */
++asmlinkage long sys_multi_os_wine_syscall(void);
++asmlinkage long sys_multi_os_darling_syscall(void);
++asmlinkage long sys_multi_os_android_syscall(void);
++asmlinkage long sys_multi_os_get_info(void);
++asmlinkage long sys_multi_os_set_config(void);
++asmlinkage long sys_multi_os_perf_stats(void);
++
+ #endif
+diff --git a/kernel/Makefile b/kernel/Makefile
+index 000000000000..000000000000 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -116,6 +116,7 @@ obj-$(CONFIG_UTS_NS) += utsname.o
+ obj-$(CONFIG_TASK_DELAY_ACCT) += delayacct.o
+ obj-$(CONFIG_TASKSTATS) += taskstats.o tsacct.o
+ obj-$(CONFIG_TRACEPOINTS) += tracepoint.o
++obj-$(CONFIG_MULTI_OS) += multi_os.o
+ 
+ $(obj)/configs.o: $(obj)/config_data.h
+diff --git a/kernel/multi_os.c b/kernel/multi_os.c
+new file mode 100644
+index 000000000000..000000000000
+--- /dev/null
++++ b/kernel/multi_os.c
+@@ -0,0 +1,51 @@
++/*
++ * Multi-OS Linux kernel module
++ *
++ * Implements custom system calls and core functionality
++ */
++
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/syscalls.h>
++#include <linux/version.h>
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("Multi-OS Linux kernel support");
++MODULE_AUTHOR("Multi-OS Linux Team");
++
++/* System information */
++static const char multi_os_version[] = "1.0.0";
++
++/* Multi-OS system call: get info */
++SYSCALL_DEFINE0(multi_os_get_info)
++{
++	pr_info("Multi-OS Linux: Version %s\n", multi_os_version);
++	return 0;
++}
++
++/* Multi-OS system call: wine syscall */
++SYSCALL_DEFINE0(multi_os_wine_syscall)
++{
++	pr_debug("Multi-OS Linux: Wine syscall invoked\n");
++	return 0;
++}
++
++/* Multi-OS system call: darling syscall */
++SYSCALL_DEFINE0(multi_os_darling_syscall)
++{
++	pr_debug("Multi-OS Linux: Darling syscall invoked\n");
++	return 0;
++}
++
++/* Multi-OS system call: android syscall */
++SYSCALL_DEFINE0(multi_os_android_syscall)
++{
++	pr_debug("Multi-OS Linux: Android syscall invoked\n");
++	return 0;
++}
++
++/* Module initialization */
++static int __init multi_os_init(void)
++{
++	pr_info("Multi-OS Linux: Initialized\n");
++	return 0;
++}
++
++/* Module exit */
++static void __exit multi_os_exit(void)
++{
++	pr_info("Multi-OS Linux: Exited\n");
++}
+-- 
+2.30.2

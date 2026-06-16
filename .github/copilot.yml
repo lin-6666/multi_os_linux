@@ -1,0 +1,123 @@
+# Multi-OS Linux Copilot 配置文件
+# 用于自定义 GitHub Copilot 在 PR 审查中的行为
+
+version: 1
+
+# 审查配置
+review:
+  # 启用/禁用 PR 审查
+  enabled: true
+  
+  # 审查范围
+  include:
+    - '**/*.c'           # C 源代码（内核）
+    - '**/*.h'           # 头文件
+    - '**/*.sh'          # Shell 脚本
+    - '**/*.py'          # Python 脚本
+    - '**/*.yml'         # YAML 配置
+    - '**/*.yaml'        # YAML 配置
+    - '**/Makefile'      # Makefile
+    - '**/README*'       # 文档
+    - '**/*.md'          # Markdown 文档
+  
+  # 排除的文件
+  exclude:
+    - 'build/**'         # 构建目录
+    - 'sources/linux-*/**' # 上游内核源码
+    - '**/*.pdf'         # PDF 文件
+    - '**/*.zip'         # 压缩文件
+    - '**/*.tar.gz'      # 压缩文件
+    - '**/*.tar.xz'      # 压缩文件
+    - '**/*.img'         # 镜像文件
+    - '**/node_modules/**'
+    - '.git/**'
+  
+  # 审查重点
+  focus:
+    - security           # 安全问题
+    - performance        # 性能问题
+    - best-practices     # 最佳实践
+    - documentation      # 文档完整性
+    - maintainability    # 可维护性
+  
+  # 审查严格程度 (low/medium/high)
+  severity: medium
+
+# PR 描述自动生成
+description:
+  enabled: true
+  
+  # 自定义模板
+  template: |
+    ## ${pull_request.title}
+    
+    ${pull_request.description}
+    
+    ### 变更概述
+    ${pull_request.changes_summary}
+    
+    ### 修改文件
+    ${pull_request.changed_files}
+    
+    ---
+    *由 GitHub Copilot 生成*
+
+# 代码建议
+suggestions:
+  # 为特定类型文件定制提示
+  prompts:
+    c: |
+      审查这个 Linux 内核代码。注意：
+      - 内核编码风格
+      - 内存安全
+      - 锁的正确使用
+      - 资源泄漏
+      - 性能影响
+    
+    shell: |
+      审查这个 Shell 脚本。注意：
+      - 安全问题（注入风险）
+      - 可移植性
+      - 错误处理
+      - 最佳实践
+    
+    python: |
+      审查这个 Python 代码。注意：
+      - Pythonic 风格
+      - 错误处理
+      - 类型安全（如果可用）
+      - 性能
+
+# 知识库（供 Copilot 参考）
+knowledge:
+  # 项目特定的编码标准
+  style_guide: |
+    Multi-OS Linux 项目编码规范：
+    - 遵循 Linux 内核编码风格（C 代码）
+    - Shell 脚本使用 bash，添加 set -euo pipefail
+    - Python 遵循 PEP 8
+    - 文档使用 Markdown
+  
+  # 项目架构
+  architecture: |
+    项目结构：
+    - kernel-dev/: 内核开发文件
+    - scripts/: 各种实用脚本
+    - config/: 配置文件
+    - docs/: 文档
+    - build/: 构建输出
+    - sources/: 上游源码
+  
+  # 技术栈
+  tech_stack:
+    - Linux 内核 6.8.x
+    - Wine (Windows 兼容层)
+    - Darling (macOS 兼容层)
+    - Waydroid (Android 兼容层)
+    - Shell 脚本
+    - Python
+
+# 忽略的建议模式
+ignored_suggestions:
+  - 'line-length'  # 我们允许更长的行（符合内核风格）
+  - 'naming-conventions'  # 遵循现有风格

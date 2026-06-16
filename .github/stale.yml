@@ -1,0 +1,26 @@
+# Mark stale issues and pull requests
+staleLabel: wontfix
+
+# Number of days of inactivity before an issue becomes stale
+daysUntilStale: 60
+
+# Number of days of inactivity before a stale issue is closed
+daysUntilClose: 7
+
+# Issues with these labels will never be considered stale
+exemptLabels:
+  - pinned
+  - security
+  - critical
+  - "good first issue"
+
+# Comment to post when marking an issue as stale
+markComment: >
+  此 issue 已自动标记为过时，因为它已有 60 天没有活动。
+  如果没有进一步的活动，它将在 7 天后关闭。
+  感谢您的贡献！
+
+# Comment to post when closing a stale issue
+closeComment: >
+  此 issue 因长期不活动已自动关闭。
+  如果您有新的信息，请随时重新开启它！

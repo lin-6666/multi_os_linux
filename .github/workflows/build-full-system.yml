@@ -1,0 +1,128 @@
+name: Build Full Multi-OS Linux System
+
+on:
+  push:
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      build_iso:
+        description: 'Build ISO image'
+        required: false
+        default: true
+        type: boolean
+      build_distro:
+        description: 'Build distribution package'
+        required: false
+        default: true
+        type: boolean
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: Build Multi-OS Linux System
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup build environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          bc \
+          bison \
+          flex \
+          libssl-dev \
+          libelf-dev \
+          dwarves \
+          wget \
+          xz-utils \
+          cpio \
+          grub2-common \
+          xorriso \
+          syslinux \
+          squashfs-tools \
+          debootstrap \
+          dosfstools \
+          mtools \
+          parted
+      
+    - name: Create build directories
+      run: |
+        mkdir -p build/work
+        mkdir -p build/iso
+        
+    - name: Build kernel
+      uses: ./.github/workflows/build-kernel.yml
+      
+    - name: Build base system
+      run: |
+        echo "Building base system..."
+        echo "This will be implemented in future versions"
+        
+    - name: Build ISO image
+      if: github.event.inputs.build_iso == 'true'
+      run: |
+        echo "Building ISO image..."
+        echo "This will be implemented in future versions"
+        
+    - name: Build distribution package
+      if: github.event.inputs.build_distro == 'true'
+      run: |
+        mkdir -p build/dist
+        
+        # Copy kernel
+        cp -r build/kernel build/dist/ 2>/dev/null || true
+        
+        # Copy scripts
+        cp -r scripts build/dist/ 2>/dev/null || true
+        cp -r config build/dist/ 2>/dev/null || true
+        cp -r docs build/dist/ 2>/dev/null || true
+        cp -r kernel-dev build/dist/ 2>/dev/null || true
+        
+        # Copy README and LICENSE
+        cp README.md build/dist/ 2>/dev/null || true
+        cp LICENSE build/dist/ 2>/dev/null || true
+        
+        # Create final package
+        cd build/dist
+        tar -czf ../multi-os-linux-$(date +%Y%m%d-%H%M%S).tar.gz .
+        cd ../..
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: multi-os-linux-${{ github.sha }}
+        path: |
+          build/*.tar.gz
+          build/*.iso
+          build/dist/
+        retention-days: 30
+        
+  release:
+    name: Create System Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: multi-os-linux-${{ github.sha }}
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          multi-os-linux-*.tar.gz
+          *.iso
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

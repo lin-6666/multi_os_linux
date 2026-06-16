@@ -1,0 +1,73 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Multi-OS Linux Team <team@multi-os.org>
+Date: Wed, 4 Jun 2026 00:00:00 +0000
+Subject: [PATCH 2/8] Add Multi-OS kernel config options
+
+Add Kconfig options for Multi-OS Linux features.
+---
+ init/Kconfig | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+diff --git a/init/Kconfig b/init/Kconfig
+index 000000000000..000000000000 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1,3 +1,50 @@
++
++menu "Multi-OS Linux Support"
++
++config MULTI_OS
++	bool "Multi-OS Linux support"
++	default y
++	help
++	  Enable Multi-OS Linux support for running Windows, macOS, and Android applications.
++
++config MULTI_OS_WINE
++	bool "Wine compatibility support"
++	depends on MULTI_OS
++	default y
++	help
++	  Enable kernel support for Wine Windows compatibility layer.
++
++config MULTI_OS_DARLING
++	bool "Darling compatibility support"
++	depends on MULTI_OS
++	default y
++	help
++	  Enable kernel support for Darling macOS compatibility layer.
++
++config MULTI_OS_ANDROID
++	bool "Android compatibility support"
++	depends on MULTI_OS
++	default y
++	help
++	  Enable kernel support for Android applications via Waydroid.
++
++config MULTI_OS_LOW_POWER
++	bool "Low power optimizations"
++	depends on MULTI_OS
++	default y
++	help
++	  Enable low power optimizations for extended battery life.
++
++config MULTI_OS_PERFORMANCE
++	bool "Performance optimizations"
++	depends on MULTI_OS
++	default y
++	help
++	  Enable performance optimizations for better responsiveness.
++
++config MULTI_OS_SECURITY
++	bool "Security enhancements"
++	depends on MULTI_OS
++	default y
++	help
++	  Enable security enhancements including sandboxing.
++
++endmenu
++
+ #
+ # For a description of the syntax of this configuration file,
+ # see Documentation/kbuild/kconfig-language.rst.
+-- 
+2.30.2
