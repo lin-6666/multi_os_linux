@@ -87,3 +87,15 @@ secrets/
 
 # 文档生成
 _site/
+
+# 自动更新系统
+.version
+.multi-os-backup/
+update.lock
+
+# 用户配置文件（使用 .example 模板）
+config/user-config.yml
+!.example
+
+# 保护标记
+.protected/

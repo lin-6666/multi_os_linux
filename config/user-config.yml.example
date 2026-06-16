@@ -1,0 +1,197 @@
+# Multi-OS Linux - 用户配置文件模板
+#
+# 此文件不会被自动更新覆盖
+# 复制此文件为 user-config.yml 并修改为您需要的配置
+#
+
+# ============================================
+# 基础配置
+# ============================================
+app:
+  name: "Multi-OS Linux"
+  version: "1.0.0"
+  update_channel: "stable"  # stable / beta / dev
+
+# ============================================
+# GitHub 配置
+# ============================================
+github:
+  owner: "lin-6666"
+  repo: "multi_os_linux"
+  # token: ""  # 可选：用于私有仓库或提高 API 限制
+  auto_update: true         # 自动检查更新
+  update_check_interval: 86400  # 检查间隔（秒），默认 24 小时
+
+# ============================================
+# 备份配置
+# ============================================
+backup:
+  enabled: true
+  location: "~/.multi-os-backup"
+  max_backups: 5  # 保留的最大备份数量
+  include_configs: true
+  include_scripts: true
+  include_customizations: true
+
+# ============================================
+# Wine 配置（Windows 兼容）
+# ============================================
+wine:
+  prefix: "~/.wine"
+  arch: "win64"  # win32 / win64
+  virtual_desktop: false
+  dxvk: true
+  esync: true
+  
+  # Steam 特定配置
+  steam:
+    install_path: "C:\\Program Files\\Steam"
+    wallpaper_engine:
+      enabled: true
+      auto_start: false
+
+# ============================================
+# Darling 配置（macOS 兼容）
+# ============================================
+darling:
+  prefix: "~/.darling"
+  home_dir: "~/.darling/home"
+  
+  # macOS 应用支持
+  apps:
+    sandbox: true
+    allow_network: true
+
+# ============================================
+# Waydroid 配置（Android 兼容）
+# ============================================
+waydroid:
+  images_path: "~/.multi-os/android"
+  data_path: "~/.local/share/waydroid"
+  
+  # Android 版本
+  android_version: "11"
+  
+  # GPU 配置
+  gpu:
+    driver: "auto"  # auto / intel / nvidia / amd
+    virgl: true
+
+# ============================================
+# 低功耗配置
+# ============================================
+power:
+  mode: "balanced"  # balanced / performance / power-saver / gaming
+  
+  # CPU 调频
+  cpu:
+    governor: "schedutil"
+    min_freq_percent: 10
+    max_freq_percent: 100
+  
+  # 电源管理
+  pm:
+    suspend_on_idle: true
+    idle_timeout: 300  # 秒
+    battery_threshold: 20  # 电量低于此值进入省电模式
+
+# ============================================
+# 性能配置
+# ============================================
+performance:
+  # 内存优化
+  memory:
+    enable_ksm: true
+    vm_swappiness: 60
+    transparent_hugepage: "always"  # always / madvise / never
+  
+  # I/O 优化
+  io:
+    scheduler: "mq-deadline"
+    read_ahead_kb: 4096
+  
+  # 网络优化
+  network:
+    tcp_congestion: "bbr"
+    enable_tw_reuse: true
+    max_connections: 65536
+
+# ============================================
+# 安全配置
+# ============================================
+security:
+  # 沙箱配置
+  sandbox:
+    wine_enabled: true
+    darling_enabled: true
+    waydroid_enabled: true
+  
+  # 访问控制
+  mac:
+    enabled: false
+    policy: "basic"  # basic / strict / paranoid
+  
+  # 审计
+  audit:
+    enabled: true
+    log_level: "info"  # debug / info / warning / error
+
+# ============================================
+# 应用启动器配置
+# ============================================
+launcher:
+  # 默认应用目录
+  app_dirs:
+    - "~/Applications"
+    - "~/.local/share/applications"
+    - "/usr/share/applications"
+  
+  # 自动检测
+  auto_detect:
+    wine_prefixes: true
+    darling_apps: true
+    waydroid_apps: true
+  
+  # 快捷方式
+  shortcuts:
+    create_desktop: true
+    create_menu: true
+
+# ============================================
+# 自定义脚本（不会被覆盖）
+# ============================================
+custom:
+  # 用户自定义脚本目录
+  scripts_dir: "scripts/custom"
+  
+  # 启动时执行的脚本
+  startup_scripts: []
+  # 示例:
+  # - "scripts/custom/my-startup.sh"
+  
+  # 关闭时执行的脚本
+  shutdown_scripts: []
+  # 示例:
+  # - "scripts/custom/my-cleanup.sh"
+
+# ============================================
+# 高级配置
+# ============================================
+advanced:
+  # 内核参数
+  kernel_params:
+    # 示例:
+    # - "processor.max_cstate=8"
+    # - "intel_idle.max_cstate=8"
+  
+  # 系统限制
+  limits:
+    max_open_files: 65536
+    max_user_instances: 1024
+  
+  # 调试选项
+  debug:
+    enabled: false
+    log_level: "info"
+    log_to_file: false
+    log_file: "~/.multi-os/debug.log"

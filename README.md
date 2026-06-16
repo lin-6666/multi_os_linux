@@ -77,6 +77,33 @@ cd multi-os-compat
 | Issue AI 助手 | [`.github/workflows/issue-ai-response.yml`](.github/workflows/issue-ai-response.yml) | 自动回复分类 Issues |
 | 依赖安全更新 | [`.github/dependabot.yml`](.github/dependabot.yml) | 自动安全更新 |
 
+### 🚀 自动更新系统
+
+本项目包含完整的自动更新系统，确保您始终使用最新版本：
+
+```bash
+# 检查更新
+./scripts/auto-update.sh --check
+
+# 安装更新
+./scripts/auto-update.sh
+
+# 创建备份
+./scripts/auto-update.sh --backup
+
+# 回滚版本
+./scripts/auto-update.sh --rollback
+```
+
+**更新特性**:
+- ✅ 自动检测 GitHub 最新版本
+- ✅ 智能增量更新，节省带宽
+- ✅ 用户配置文件保护，不被覆盖
+- ✅ 自动备份所有重要数据
+- ✅ 支持完整版本回滚
+
+详细说明请参见 [docs/AUTO_UPDATE_GUIDE.md](docs/AUTO_UPDATE_GUIDE.md)
+
 ### 使用 Copilot Chat
 
 在支持 Copilot Chat 的编辑器中，您可以:
